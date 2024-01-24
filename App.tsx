@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { BlurView } from "expo-blur";
 import { JSX } from "react";
+import Clock from "./components/Clock";
 
 export default function App(): JSX.Element {
   return (
@@ -12,7 +13,7 @@ export default function App(): JSX.Element {
         style={styles.image}
       />
       <View style={styles.container}>
-        <Text>AAAA</Text>
+        <Clock />
         <BlurView
           experimentalBlurMethod={"dimezisBlurView"}
           style={styles.blurContainer}
@@ -27,9 +28,6 @@ export default function App(): JSX.Element {
 const styles = StyleSheet.create({
   baseContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   image: {
     flex: 1,
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 32,
+    alignItems: "flex-end",
   },
   blurContainer: {
     flex: 1,
