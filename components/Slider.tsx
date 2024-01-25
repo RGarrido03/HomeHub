@@ -1,18 +1,34 @@
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import LazyLoadView from "./LazyLoadView";
 import { StyleSheet } from "react-native";
+import * as MediaLibrary from "expo-media-library";
 
 export default function Slider(): JSX.Element {
-  const urls: string[] = [
-    "https://picsum.photos/1922/1082",
-    "https://picsum.photos/1920/1080",
-    "https://picsum.photos/1921/1081",
-    "https://picsum.photos/1923/1083",
-    "https://picsum.photos/1924/1084",
-  ];
+  const [urls, setUrls] = useState<string[]>([]);
+
+  const getPhotos = async (): Promise<string[]> => {
+    const permission = await MediaLibrary.requestPermissionsAsync();
+    if (!permission.granted) {
+      alert("Camera roll permission is needed.");
+      return [];
+    }
+
+    const assets = await MediaLibrary.getAssetsAsync({
+      mediaType: "photo",
+      first: 1000,
+    });
+
+    return assets.assets.map((asset) => asset.uri);
+  };
+
+  useEffect(() => {
+    getPhotos().then((data) => {
+      setUrls(data);
+    });
+  }, []);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 

@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 
 type LazyLoadViewProps = {
@@ -13,16 +13,28 @@ export default function LazyLoadView({
   currentIndex,
   index,
 }: LazyLoadViewProps): JSX.Element {
-  if (!(currentIndex - index in [-1, 0, 1])) {
-    return <View style={styles.imageContainer} />;
+  if (isActive(currentIndex, index)) {
+    return (
+      <View style={styles.imageContainer}>
+        <Image contentFit="contain" source={item} style={styles.image} />
+        <Text style={{ color: "#fff", position: "absolute" }}>
+          Index {index}, current index {currentIndex}. Diff is{" "}
+          {index - currentIndex}.
+        </Text>
+      </View>
+    );
   }
 
-  return (
-    <View style={styles.imageContainer}>
-      <Image contentFit={"cover"} source={item} style={styles.image} />
-    </View>
-  );
+  return <></>;
 }
+
+const isActive = (currentIndex: number, index: number): boolean => {
+  return (
+    currentIndex === index ||
+    currentIndex - 1 === index ||
+    currentIndex + 1 === index
+  );
+};
 
 const styles = StyleSheet.create({
   image: {
