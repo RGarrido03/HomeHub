@@ -1,17 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Image } from "expo-image";
 import { BlurView } from "expo-blur";
 import { JSX } from "react";
 import Clock from "./components/Clock";
+import Slider from "./components/Slider";
 
 export default function App(): JSX.Element {
   return (
     <View style={styles.baseContainer}>
-      <Image
-        contentFit={"cover"}
-        source={"https://picsum.photos/1920/1080"}
-        style={styles.image}
-      />
+      <Slider />
       <View style={styles.container}>
         <Clock />
         <BlurView
@@ -28,11 +24,6 @@ export default function App(): JSX.Element {
 const styles = StyleSheet.create({
   baseContainer: {
     flex: 1,
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: "#0553",
   },
   container: {
     position: "absolute",
