@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HomeHub",
-    "slug": "HomeHub",
+    "slug": "homehub",
     "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
@@ -41,6 +41,12 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0f620d89-d47d-4a51-9b75-ccf12da4abf3"
+      }
+    },
+    "owner": "rgarrido03"
   }
 }
