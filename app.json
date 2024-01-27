@@ -6,6 +6,7 @@
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "scheme": "your-app-scheme",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -42,7 +43,8 @@
             "newArchEnabled": true
           }
         }
-      ]
+      ],
+      "expo-router"
     ],
     "extra": {
       "eas": {

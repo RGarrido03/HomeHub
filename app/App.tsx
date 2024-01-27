@@ -7,8 +7,8 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { JSX } from "react";
-import Clock from "./components/Clock";
-import Slider from "./components/Slider";
+import Clock from "../components/Clock";
+import Slider from "../components/Slider";
 
 export default function App(): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
