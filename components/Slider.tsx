@@ -1,10 +1,11 @@
+import * as MediaLibrary from "expo-media-library";
+import { JSX, useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
-import { JSX, useEffect, useState } from "react";
+
 import LazyLoadView from "./LazyLoadView";
-import { StyleSheet } from "react-native";
-import * as MediaLibrary from "expo-media-library";
 
 export default function Slider(): JSX.Element {
   const [urls, setUrls] = useState<string[]>([]);

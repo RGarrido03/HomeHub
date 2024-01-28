@@ -1,6 +1,6 @@
+import { Image } from "expo-image";
 import { JSX } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Image } from "expo-image";
 
 type LazyLoadViewProps = {
   item: string;

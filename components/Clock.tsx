@@ -1,6 +1,7 @@
-import { Animated, Text } from "react-native";
-import { JSX, useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { JSX, useEffect, useState } from "react";
+import { Animated, Text } from "react-native";
+
 import View = Animated.View;
 
 export default function Clock(): JSX.Element {

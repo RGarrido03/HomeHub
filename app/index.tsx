@@ -1,3 +1,5 @@
+import { BlurView } from "expo-blur";
+import { JSX } from "react";
 import {
   ColorSchemeName,
   StyleSheet,
@@ -5,8 +7,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { BlurView } from "expo-blur";
-import { JSX } from "react";
+
 import Clock from "../components/Clock";
 import Slider from "../components/Slider";
 
@@ -19,7 +20,7 @@ export default function App(): JSX.Element {
       <View style={styles.container}>
         <Clock />
         <BlurView
-          experimentalBlurMethod={"dimezisBlurView"}
+          experimentalBlurMethod="dimezisBlurView"
           style={styles.blurContainer}
           tint={theme === "dark" ? "dark" : "default"}
         >
