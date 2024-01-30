@@ -7,6 +7,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
 import Clock from "../components/Clock";
 import Slider from "../components/Slider";
@@ -15,19 +16,21 @@ export default function App(): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
 
   return (
-    <View style={styles.baseContainer}>
-      <Slider />
-      <View style={styles.container}>
-        <Clock />
-        <BlurView
-          experimentalBlurMethod="dimezisBlurView"
-          style={styles.blurContainer}
-          tint={theme === "dark" ? "dark" : "default"}
-        >
-          <Text>Open up App.tsx to start working on your app!</Text>
-        </BlurView>
+    <PaperProvider>
+      <View style={styles.baseContainer}>
+        <Slider />
+        <View style={styles.container}>
+          <Clock />
+          <BlurView
+            experimentalBlurMethod="dimezisBlurView"
+            style={styles.blurContainer}
+            tint={theme === "dark" ? "dark" : "default"}
+          >
+            <Text>Open up App.tsx to start working on your app!</Text>
+          </BlurView>
+        </View>
       </View>
-    </View>
+    </PaperProvider>
   );
 }
 
