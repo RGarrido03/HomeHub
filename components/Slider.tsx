@@ -1,6 +1,6 @@
 import * as MediaLibrary from "expo-media-library";
 import { JSX, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
@@ -8,7 +8,9 @@ import PagerView, {
 import LazyLoadView from "./LazyLoadView";
 
 export default function Slider(): JSX.Element {
+  const [ready, setReady] = useState<boolean>(false);
   const [urls, setUrls] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const getPhotos = async (): Promise<string[]> => {
     const permission = await MediaLibrary.requestPermissionsAsync();
@@ -28,16 +30,15 @@ export default function Slider(): JSX.Element {
   useEffect(() => {
     getPhotos().then((data) => {
       setUrls(data);
+      setReady(true);
     });
   }, []);
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   function onPageSelected(e: PagerViewOnPageSelectedEvent): void {
     setCurrentIndex(e.nativeEvent.position);
   }
 
-  return (
+  return ready ? (
     <PagerView style={styles.pagerView} onPageSelected={onPageSelected}>
       {urls.map((url, index) => (
         <LazyLoadView
@@ -48,6 +49,10 @@ export default function Slider(): JSX.Element {
         />
       ))}
     </PagerView>
+  ) : (
+    <View style={styles.pagerView}>
+      <Text style={{ color: "#fff" }}>Fetching photos...</Text>
+    </View>
   );
 }
 
@@ -57,5 +62,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "#000",
+  },
+  waitingView: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
