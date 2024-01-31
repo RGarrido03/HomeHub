@@ -1,5 +1,12 @@
 import * as MediaLibrary from "expo-media-library";
-import { JSX, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  JSX,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
@@ -7,7 +14,12 @@ import PagerView, {
 
 import LazyLoadView from "./LazyLoadView";
 
-export default function Slider(): JSX.Element {
+type SliderProps = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);
   const [urls, setUrls] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -56,6 +68,7 @@ export default function Slider(): JSX.Element {
       style={styles.pagerView}
       ref={pagerView}
       onPageSelected={onPageSelected}
+      onTouchStart={() => setOpen(!open)}
     >
       {urls.map((url, index) => (
         <LazyLoadView
@@ -67,7 +80,7 @@ export default function Slider(): JSX.Element {
       ))}
     </PagerView>
   ) : (
-    <View style={styles.pagerView}>
+    <View style={styles.waitingView}>
       <Text style={{ color: "#fff" }}>Fetching photos...</Text>
     </View>
   );

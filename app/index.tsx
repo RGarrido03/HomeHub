@@ -1,5 +1,5 @@
 import { BlurView } from "expo-blur";
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import {
   ColorSchemeName,
   StyleSheet,
@@ -14,20 +14,23 @@ import Slider from "../components/Slider";
 
 export default function App(): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <PaperProvider>
       <View style={styles.baseContainer}>
-        <Slider />
+        <Slider open={open} setOpen={setOpen} />
         <View style={styles.container}>
           <Clock />
-          <BlurView
-            experimentalBlurMethod="dimezisBlurView"
-            style={styles.blurContainer}
-            tint={theme === "dark" ? "dark" : "default"}
-          >
-            <Text>Open up App.tsx to start working on your app!</Text>
-          </BlurView>
+          {open && (
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              style={styles.blurContainer}
+              tint={theme === "dark" ? "dark" : "default"}
+            >
+              <Text>Open up App.tsx to start working on your app!</Text>
+            </BlurView>
+          )}
         </View>
       </View>
     </PaperProvider>
