@@ -44,19 +44,16 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
     getPhotos().then((data) => {
       setUrls(data);
       setReady(true);
-    });
-  }, []);
 
-  useEffect(() => {
-    if (ready) {
-      setInterval(() => {
+      const intervalId = setInterval(() => {
         setCurrentIndex((idx) => {
-          pagerView.current?.setPage((idx + 1) % urls.length);
+          pagerView.current?.setPage((idx + 1) % data.length);
           return idx;
         });
       }, 5000);
-    }
-  }, [ready]);
+      return () => clearInterval(intervalId);
+    });
+  }, []);
 
   function onPageSelected(e: PagerViewOnPageSelectedEvent): void {
     setCurrentIndex(e.nativeEvent.position);
