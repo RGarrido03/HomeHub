@@ -1,5 +1,5 @@
 import * as MediaLibrary from "expo-media-library";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
@@ -11,6 +11,7 @@ export default function Slider(): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);
   const [urls, setUrls] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const pagerView = useRef<PagerView>(null);
 
   const getPhotos = async (): Promise<string[]> => {
     const permission = await MediaLibrary.requestPermissionsAsync();
@@ -31,6 +32,14 @@ export default function Slider(): JSX.Element {
     getPhotos().then((data) => {
       setUrls(data);
       setReady(true);
+
+      const intervalId = setInterval(() => {
+        setCurrentIndex((idx) => {
+          pagerView.current?.setPage((idx + 1) % data.length);
+          return idx;
+        });
+      }, 5000);
+      return () => clearInterval(intervalId);
     });
   }, []);
 
@@ -39,7 +48,11 @@ export default function Slider(): JSX.Element {
   }
 
   return ready ? (
-    <PagerView style={styles.pagerView} onPageSelected={onPageSelected}>
+    <PagerView
+      style={styles.pagerView}
+      ref={pagerView}
+      onPageSelected={onPageSelected}
+    >
       {urls.map((url, index) => (
         <LazyLoadView
           key={index}
