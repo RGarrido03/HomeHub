@@ -41,18 +41,21 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
   };
 
   useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
     getPhotos().then((data) => {
       setUrls(data);
       setReady(true);
 
-      const intervalId = setInterval(() => {
+      interval = setInterval(() => {
         setCurrentIndex((idx) => {
           pagerView.current?.setPage((idx + 1) % data.length);
           return idx;
         });
       }, 5000);
-      return () => clearInterval(intervalId);
     });
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, []);
 
   function onPageSelected(e: PagerViewOnPageSelectedEvent): void {
