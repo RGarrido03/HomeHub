@@ -52,6 +52,7 @@ export default function Slider(): JSX.Element {
 
   return ready ? (
     <PagerView
+      scrollEnabled={false}
       style={styles.pagerView}
       ref={pagerView}
       onPageSelected={onPageSelected}
