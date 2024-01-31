@@ -25,11 +25,7 @@ export default function LazyLoadView({
 }
 
 const isActive = (currentIndex: number, index: number): boolean => {
-  return (
-    currentIndex === index ||
-    currentIndex - 1 === index ||
-    currentIndex + 1 === index
-  );
+  return currentIndex === index || currentIndex + 1 === index;
 };
 
 const styles = StyleSheet.create({
