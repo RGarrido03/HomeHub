@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import { JSX } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 type LazyLoadViewProps = {
   item: string;
@@ -17,10 +17,6 @@ export default function LazyLoadView({
     return (
       <View style={styles.imageContainer}>
         <Image contentFit="contain" source={item} style={styles.image} />
-        <Text style={{ color: "#fff", position: "absolute" }}>
-          Index {index}, current index {currentIndex}. Diff is{" "}
-          {index - currentIndex}.
-        </Text>
       </View>
     );
   }
