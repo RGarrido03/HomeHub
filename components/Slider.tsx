@@ -7,12 +7,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import PagerView, {
-  PagerViewOnPageSelectedEvent,
-} from "react-native-pager-view";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-import LazyLoadView from "./LazyLoadView";
+import ImageContainer from "./ImageContainer";
 
 type SliderProps = {
   open: boolean;
@@ -22,8 +19,8 @@ type SliderProps = {
 export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);
   const [urls, setUrls] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const pagerView = useRef<PagerView>(null);
+  const [, setCurrentIndex] = useState<number>(0);
+  const flatListRef = useRef<FlatList>(null);
 
   const getPhotos = async (): Promise<string[]> => {
     const permission = await MediaLibrary.requestPermissionsAsync();
@@ -48,8 +45,11 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
 
       interval = setInterval(() => {
         setCurrentIndex((idx) => {
-          pagerView.current?.setPage((idx + 1) % data.length);
-          return idx;
+          flatListRef.current?.scrollToIndex({
+            animated: true,
+            index: idx < data.length - 1 ? idx + 1 : 0,
+          });
+          return idx < data.length - 1 ? idx + 1 : 0;
         });
       }, 5000);
     });
@@ -58,27 +58,21 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
     };
   }, []);
 
-  function onPageSelected(e: PagerViewOnPageSelectedEvent): void {
-    setCurrentIndex(e.nativeEvent.position);
-  }
-
   return ready ? (
-    <PagerView
-      scrollEnabled={false}
+    <FlatList
+      ref={flatListRef}
       style={styles.pagerView}
-      ref={pagerView}
-      onPageSelected={onPageSelected}
-      onTouchStart={() => setOpen(!open)}
-    >
-      {urls.map((url, index) => (
-        <LazyLoadView
-          key={index}
-          item={url}
-          index={index}
-          currentIndex={currentIndex}
-        />
-      ))}
-    </PagerView>
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(item) => item}
+      data={urls}
+      renderItem={({ item }) => <ImageContainer item={item} />}
+      windowSize={2}
+      initialNumToRender={1}
+      maxToRenderPerBatch={1}
+      removeClippedSubviews
+    />
   ) : (
     <View style={styles.waitingView}>
       <Text style={{ color: "#fff" }}>Fetching photos...</Text>
@@ -90,7 +84,6 @@ const styles = StyleSheet.create({
   pagerView: {
     flex: 1,
     width: "100%",
-    height: "100%",
     backgroundColor: "#000",
   },
   waitingView: {
