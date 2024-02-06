@@ -1,6 +1,7 @@
 import { JSX, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
+import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
 
 import Clock from "../components/Clock";
 import MainDashboard from "../components/MainDashboard";
@@ -19,7 +20,15 @@ export default function App(): JSX.Element {
         />
         <View style={styles.container}>
           <Clock />
-          {open && <MainDashboard />}
+          {open && (
+            <Animated.View
+              style={styles.blurContainerWrapper}
+              entering={FadeInRight}
+              exiting={FadeOutRight}
+            >
+              <MainDashboard />
+            </Animated.View>
+          )}
         </View>
       </View>
     </PaperProvider>
@@ -35,6 +44,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+  },
+  blurContainerWrapper: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    borderRadius: 16,
   },
   container: {
     position: "absolute",
