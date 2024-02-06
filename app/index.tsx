@@ -1,19 +1,12 @@
-import { BlurView } from "expo-blur";
 import { JSX, useState } from "react";
-import {
-  ColorSchemeName,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
 import Clock from "../components/Clock";
+import MainDashboard from "../components/MainDashboard";
 import Slider from "../components/Slider";
 
 export default function App(): JSX.Element {
-  const theme: ColorSchemeName = useColorScheme();
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -22,15 +15,7 @@ export default function App(): JSX.Element {
         <Slider open={open} setOpen={setOpen} />
         <View style={styles.container}>
           <Clock />
-          {open && (
-            <BlurView
-              experimentalBlurMethod="dimezisBlurView"
-              style={styles.blurContainer}
-              tint={theme === "dark" ? "dark" : "default"}
-            >
-              <Text>Open up App.tsx to start working on your app!</Text>
-            </BlurView>
-          )}
+          {open && <MainDashboard />}
         </View>
       </View>
     </PaperProvider>
@@ -51,13 +36,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 32,
     alignItems: "flex-end",
-  },
-  blurContainer: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    padding: 16,
-    borderRadius: 16,
-    overflow: "hidden",
   },
 });
