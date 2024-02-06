@@ -11,7 +11,17 @@ export default function ImageContainer({
 }: ImageContainerProps): JSX.Element {
   return (
     <View style={styles.imageContainer}>
-      <Image contentFit="contain" source={item} style={styles.image} />
+      <Image
+        contentFit="cover"
+        source={item}
+        blurRadius={64}
+        style={styles.image}
+      />
+      <Image
+        contentFit="contain"
+        source={item}
+        style={[styles.image, styles.absolute]}
+      />
     </View>
   );
 }
@@ -21,6 +31,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+  },
+  absolute: {
+    position: "absolute",
   },
   imageContainer: {
     flex: 1,
