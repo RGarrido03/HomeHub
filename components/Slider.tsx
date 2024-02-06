@@ -1,22 +1,10 @@
 import * as MediaLibrary from "expo-media-library";
-import {
-  Dispatch,
-  JSX,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 
 import ImageContainer from "./ImageContainer";
 
-type SliderProps = {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
+export default function Slider(): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);
   const [urls, setUrls] = useState<string[]>([]);
   const [, setCurrentIndex] = useState<number>(0);
