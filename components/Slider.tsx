@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 
 import ImageContainer from "./ImageContainer";
 
@@ -44,6 +44,7 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
       setReady(true);
 
       interval = setInterval(() => {
+        console.log("-------------");
         setCurrentIndex((idx) => {
           flatListRef.current?.scrollToIndex({
             animated: true,
@@ -71,6 +72,11 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
       windowSize={2}
       initialNumToRender={1}
       maxToRenderPerBatch={1}
+      getItemLayout={(_data, index) => ({
+        length: Dimensions.get("window").width,
+        offset: Dimensions.get("window").width * index,
+        index,
+      })}
       removeClippedSubviews
     />
   ) : (
