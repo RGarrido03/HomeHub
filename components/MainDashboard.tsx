@@ -16,13 +16,7 @@ export default function MainDashboard() {
       style={styles.blurContainer}
       tint={theme === "dark" ? "dark" : "default"}
     >
-      <View
-        style={[
-          styles.blurContainer,
-          styles.containerView,
-          theme === "dark" ? styles.borderDark : styles.borderLight,
-        ]}
-      >
+      <View style={[styles.blurContainer, styles.containerView]}>
         <Text>Open up App.tsx to start working on your app!</Text>
       </View>
     </BlurView>
@@ -41,11 +35,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderStyle: "solid",
     borderWidth: 1.5,
-  },
-  borderLight: {
-    borderColor: "rgba(255, 255, 255, 0.2)",
-  },
-  borderDark: {
     borderColor: "rgba(255, 255, 255, 0.1)",
   },
 });
