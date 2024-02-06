@@ -38,25 +38,26 @@ export default function Slider({ open, setOpen }: SliderProps): JSX.Element {
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    getPhotos().then((data) => {
-      setUrls(data);
+    let interval: NodeJS.Timeout;
+
+    const logic = async () => {
+      const photos = await getPhotos();
+      setUrls(photos);
       setReady(true);
 
       interval = setInterval(() => {
-        console.log("-------------");
         setCurrentIndex((idx) => {
           flatListRef.current?.scrollToIndex({
             animated: true,
-            index: idx < data.length - 1 ? idx + 1 : 0,
+            index: idx < photos.length - 1 ? idx + 1 : 0,
           });
-          return idx < data.length - 1 ? idx + 1 : 0;
+          return idx < photos.length - 1 ? idx + 1 : 0;
         });
       }, 5000);
-    });
-    return () => {
-      if (interval) clearInterval(interval);
     };
+    logic().then();
+
+    return () => clearInterval(interval);
   }, []);
 
   return ready ? (
