@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    borderRadius: 16,
+    borderRadius: 32,
     overflow: "hidden",
   },
   containerView: {
     padding: 16,
+    gap: 16,
     borderStyle: "solid",
     borderWidth: 1.5,
     borderColor: "rgba(255, 255, 255, 0.1)",
