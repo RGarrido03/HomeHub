@@ -2,7 +2,7 @@ import * as MediaLibrary from "expo-media-library";
 import { JSX, useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 
-import ImageContainer from "./ImageContainer";
+import ImageContainer from "@/components/ImageContainer";
 
 export default function Slider(): JSX.Element {
   const [ready, setReady] = useState<boolean>(false);

@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
 
-import Clock from "../components/Clock";
-import MainDashboard from "../components/MainDashboard";
-import Slider from "../components/Slider";
+import Clock from "@/components/Clock";
+import MainDashboard from "@/components/MainDashboard";
+import Slider from "@/components/Slider";
 
 export default function App(): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
