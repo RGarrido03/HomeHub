@@ -11,9 +11,14 @@ import {
 type ButtonProps = {
   title: string;
   icon?: keyof typeof MaterialIcons.glyphMap;
+  unitOfMeasurement: string;
 };
 
-export default function Button({ title, icon }: ButtonProps) {
+export default function Button({
+  title,
+  icon,
+  unitOfMeasurement,
+}: ButtonProps) {
   const theme: ColorSchemeName = useColorScheme();
 
   return (
@@ -30,7 +35,7 @@ export default function Button({ title, icon }: ButtonProps) {
             theme === "dark" ? styles.darkTitle : styles.lightTitle,
           ]}
         >
-          {title}
+          {title} {unitOfMeasurement}
         </Text>
       </View>
     </TouchableOpacity>
