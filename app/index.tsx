@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from "@env";
+import { ACCESS_TOKEN, HOST } from "@env";
 import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
@@ -24,9 +24,7 @@ export default function App(): JSX.Element {
   const [entities, setEntities] = useState<EntityMapping>(initialEntities);
 
   useEffect(() => {
-    ws.current = new WebSocket(
-      "https://home.garridoegarridolda.pt/api/websocket",
-    );
+    ws.current = new WebSocket(HOST);
 
     ws.current.onopen = () => {
       setWsState((st) => ({ ...st, connected: true }));
