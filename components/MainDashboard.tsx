@@ -1,13 +1,22 @@
 import { BlurView } from "expo-blur";
+import { JSX } from "react";
 import {
   ColorSchemeName,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from "react-native";
 
-export default function MainDashboard() {
+import Button from "@/components/Button";
+import { EntityMapping } from "@/types/device";
+
+type MainDashboardProps = {
+  entities: EntityMapping;
+};
+
+export default function MainDashboard({
+  entities,
+}: MainDashboardProps): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
 
   return (
@@ -17,7 +26,14 @@ export default function MainDashboard() {
       tint={theme === "dark" ? "dark" : "default"}
     >
       <View style={[styles.blurContainer, styles.containerView]}>
-        <Text>Open up App.tsx to start working on your app!</Text>
+        {Object.entries(entities).map(([entity_id, entity]) => (
+          <Button
+            key={entity_id}
+            title={entity.state.value.toString()}
+            icon={entity.icon}
+            unitOfMeasurement={entity.unitOfMeasurement}
+          />
+        ))}
       </View>
     </BlurView>
   );

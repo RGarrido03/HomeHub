@@ -85,7 +85,7 @@ export default function App(): JSX.Element {
               entering={FadeInRight}
               exiting={FadeOutRight}
             >
-              <MainDashboard />
+              <MainDashboard entities={entities} />
             </Animated.View>
           )}
         </View>
