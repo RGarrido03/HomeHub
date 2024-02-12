@@ -44,7 +44,6 @@ export default function Button({
 
 const styles = StyleSheet.create({
   touchable: {
-    flex: 1,
     borderRadius: 16,
     backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 16,
     padding: 16,
-    flex: 1,
     gap: 8,
     borderStyle: "solid",
     borderWidth: 1,
