@@ -12,7 +12,7 @@ type ButtonProps = {
   title: string;
   value: string | number;
   icon?: keyof typeof MaterialIcons.glyphMap;
-  unitOfMeasurement: string;
+  unitOfMeasurement: string | undefined;
 };
 
 export default function Button({

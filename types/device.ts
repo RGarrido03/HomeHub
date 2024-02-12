@@ -16,7 +16,7 @@ export type Entity = {
   icon?: keyof typeof MaterialIcons.glyphMap;
   state: State;
   oldState?: State;
-  unitOfMeasurement: string;
+  unitOfMeasurement?: string;
   lastRefreshed?: Date;
   action?: Action;
 };
