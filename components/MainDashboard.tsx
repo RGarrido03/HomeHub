@@ -33,7 +33,8 @@ export default function MainDashboard({
         columnWrapperStyle={{ gap: 16 }}
         renderItem={({ item }) => (
           <Button
-            title={item[1].state.value.toString()}
+            title={item[1].name}
+            value={item[1].state.value.toString()}
             icon={item[1].icon}
             unitOfMeasurement={item[1].unitOfMeasurement}
           />

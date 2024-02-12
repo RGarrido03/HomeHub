@@ -10,12 +10,14 @@ import {
 
 type ButtonProps = {
   title: string;
+  value: string | number;
   icon?: keyof typeof MaterialIcons.glyphMap;
   unitOfMeasurement: string;
 };
 
 export default function Button({
   title,
+  value,
   icon,
   unitOfMeasurement,
 }: ButtonProps) {
@@ -29,14 +31,24 @@ export default function Button({
     >
       <View style={styles.containerView}>
         {icon && <MaterialIcons size={32} name={icon} />}
-        <Text
-          style={[
-            styles.title,
-            theme === "dark" ? styles.darkTitle : styles.lightTitle,
-          ]}
-        >
-          {title} {unitOfMeasurement}
-        </Text>
+        <View>
+          <Text
+            style={[
+              styles.title,
+              theme === "dark" ? styles.darkTitle : styles.lightTitle,
+            ]}
+          >
+            {title}
+          </Text>
+          <Text
+            style={[
+              styles.value,
+              theme === "dark" ? styles.darkTitle : styles.lightTitle,
+            ]}
+          >
+            {value} {unitOfMeasurement}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -49,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
   containerView: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 16,
@@ -61,8 +73,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 20,
     opacity: 0.7,
+  },
+  value: {
+    opacity: 0.5,
+    fontSize: 16,
+    textAlign: "right",
   },
   lightTitle: {
     color: "#000",
