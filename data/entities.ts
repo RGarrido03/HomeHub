@@ -28,4 +28,31 @@ export const initialEntities: EntityMapping = {
       value: 0,
     },
   },
+  "sensor.atc_c171_temperature": {
+    name: "Quarto do Rúben",
+    type: "sensor",
+    icon: "thermometer",
+    unitOfMeasurement: "ºC",
+    state: {
+      value: 0,
+    },
+  },
+  "sensor.atc_512b_temperature": {
+    name: "Quarto de hóspedes",
+    type: "sensor",
+    icon: "thermometer",
+    unitOfMeasurement: "ºC",
+    state: {
+      value: 0,
+    },
+  },
+  "sensor.atc_48d3_temperature": {
+    name: "Mezzanine",
+    type: "sensor",
+    icon: "thermometer",
+    unitOfMeasurement: "ºC",
+    state: {
+      value: 0,
+    },
+  },
 };
