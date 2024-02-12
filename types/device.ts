@@ -11,7 +11,6 @@ type Action = {
 };
 
 export type Entity = {
-  id: string;
   name: string;
   type: "sensor" | "binary_sensor" | "light" | "cover" | "lock";
   icon?: keyof typeof MaterialIcons.glyphMap;
@@ -25,6 +24,10 @@ export type Entity = {
 export type Device = {
   name: string;
   icon: keyof typeof MaterialIcons.glyphMap;
-  primaryEntity: Entity;
-  secondaryEntities?: Entity[];
+  primaryEntity: string;
+  secondaryEntities?: string[];
+};
+
+export type EntityMapping = {
+  [key: string]: Entity;
 };
