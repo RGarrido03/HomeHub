@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN } from "@env";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
@@ -19,24 +19,43 @@ export default function App(): JSX.Element {
     subscribed: false,
   });
 
+  const ws = useRef<WebSocket>();
   const [entities, setEntities] = useState<EntityMapping>(initialEntities);
 
   useEffect(() => {
-    const ws = new WebSocket(
+    ws.current = new WebSocket(
       "https://home.garridoegarridolda.pt/api/websocket",
     );
 
-    ws.onopen = () => {
+    ws.current.onopen = () => {
       setWsState((st) => ({ ...st, connected: true }));
     };
 
-    ws.onclose = () => {
-      setWsState({ connected: false, auth: false, subscribed: false });
+    ws.current.onmessage = () => {
+      ws.current?.send(
+        JSON.stringify({
+          type: "auth",
+          access_token: ACCESS_TOKEN,
+        }),
+      );
+      setWsState((st) => ({ ...st, auth: true }));
+      console.log("Authenticated");
     };
 
-    ws.onmessage = (e) => {
-      if (!wsState.auth) {
-        ws.send(
+    return () => {
+      setWsState({ connected: false, auth: false, subscribed: false });
+      ws.current?.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ws.current || !wsState.connected) {
+      return;
+    }
+
+    if (!wsState.auth) {
+      ws.current.onmessage = () => {
+        ws.current?.send(
           JSON.stringify({
             type: "auth",
             access_token: ACCESS_TOKEN,
@@ -44,30 +63,32 @@ export default function App(): JSX.Element {
         );
         setWsState((st) => ({ ...st, auth: true }));
         console.log("Authenticated");
-        return;
-      }
+      };
+      return;
+    }
 
-      if (!wsState.subscribed) {
+    if (!wsState.subscribed) {
+      ws.current.onmessage = () => {
         const entityIds = Object.entries(entities).map((k) => k[0]);
 
-        ws.send(
+        ws.current?.send(
           JSON.stringify({
             id: 18,
-            type: "subscribe_events",
+            type: "subscribe_entities",
             entity_ids: entityIds,
           }),
         );
         setWsState((st) => ({ ...st, subscribed: true }));
         console.log("Subscribed");
-        return;
-      }
+      };
+      return;
+    }
 
+    ws.current.onmessage = (e: MessageEvent<string>) => {
       const data = JSON.parse(e.data);
       console.log(data);
     };
-
-    return ws.close();
-  }, []);
+  }, [wsState]);
 
   return (
     <PaperProvider>
