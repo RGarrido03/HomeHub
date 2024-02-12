@@ -30,8 +30,8 @@ export default function Button({
       activeOpacity={0.7}
     >
       <View style={styles.containerView}>
-        {icon && <MaterialIcons size={32} name={icon} />}
-        <View>
+        {icon && <MaterialIcons size={32} name={icon} style={styles.icon} />}
+        <View style={{ flex: 1 }}>
           <Text
             style={[
               styles.title,
@@ -66,10 +66,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 16,
     padding: 16,
-    gap: 8,
+    gap: 16,
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.1)",
+  },
+  icon: {
+    opacity: 0.7,
   },
   title: {
     fontWeight: "bold",
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
   value: {
     opacity: 0.5,
     fontSize: 16,
-    textAlign: "right",
+    textAlign: "left",
   },
   lightTitle: {
     color: "#000",
