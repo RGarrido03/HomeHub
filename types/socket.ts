@@ -9,19 +9,6 @@ type Message = {
   type: string;
 };
 
-type Auth = Message & {
-  ha_version?: string;
-  hassUrl?: string;
-  authCode?: string;
-};
-
-type Result = Message & {
-  id: number;
-  type: "result";
-  success: boolean;
-  result: null;
-};
-
 export type ReceivedEvent = Message & {
   id: number;
   type: "event";
