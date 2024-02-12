@@ -12,7 +12,14 @@ type Action = {
 
 export type Entity = {
   name: string;
-  type: "sensor" | "binary_sensor" | "light" | "cover" | "lock";
+  type:
+    | "sensor"
+    | "binary_sensor"
+    | "light"
+    | "cover"
+    | "lock"
+    | "script"
+    | "switch";
   icon?: keyof typeof MaterialIcons.glyphMap;
   state: State;
   oldState?: State;
