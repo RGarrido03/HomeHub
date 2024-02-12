@@ -2,6 +2,7 @@ export type WsState = {
   connected: boolean;
   auth: boolean;
   subscribed: boolean;
+  ack: boolean;
 };
 
 type Message = {

@@ -17,6 +17,7 @@ export default function App(): JSX.Element {
     connected: false,
     auth: false,
     subscribed: false,
+    ack: false,
   });
 
   const ws = useRef<WebSocket>();
@@ -43,7 +44,12 @@ export default function App(): JSX.Element {
     };
 
     return () => {
-      setWsState({ connected: false, auth: false, subscribed: false });
+      setWsState({
+        connected: false,
+        auth: false,
+        subscribed: false,
+        ack: false,
+      });
       ws.current?.close();
     };
   }, []);
@@ -80,6 +86,14 @@ export default function App(): JSX.Element {
         );
         setWsState((st) => ({ ...st, subscribed: true }));
         console.log("Subscribed");
+      };
+      return;
+    }
+
+    if (!wsState.ack) {
+      ws.current.onmessage = () => {
+        setWsState((st) => ({ ...st, ack: true }));
+        console.log("Acknowledged");
       };
       return;
     }
