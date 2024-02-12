@@ -1,4 +1,4 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 type State = {
   value: boolean | number | string;

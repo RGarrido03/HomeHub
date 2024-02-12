@@ -3,13 +3,13 @@ import { Device } from "@/types/device";
 export const devices: Device[] = [
   {
     name: "SolaX Solar Panel",
-    icon: "search",
+    icon: "solar-panel",
     primaryEntity: "sensor.solax_ac_power",
     secondaryEntities: ["sensor.solax_ac_output_voltage"],
   },
   {
     name: "Thermometer (Quarto principal)",
-    icon: "search",
+    icon: "thermometer",
     primaryEntity: "sensor.atc_a901_temperature",
   },
 ];

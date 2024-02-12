@@ -4,7 +4,7 @@ export const initialEntities: EntityMapping = {
   "sensor.solax_ac_power": {
     name: "AC Power",
     type: "sensor",
-    icon: "search",
+    icon: "solar-panel",
     unitOfMeasurement: "W",
     state: {
       value: 2500,
@@ -13,7 +13,7 @@ export const initialEntities: EntityMapping = {
   "sensor.solax_ac_output_voltage": {
     name: "AC Voltage",
     type: "sensor",
-    icon: "search",
+    icon: "sine-wave",
     unitOfMeasurement: "V",
     state: {
       value: 240,
@@ -22,7 +22,7 @@ export const initialEntities: EntityMapping = {
   "sensor.atc_a901_temperature": {
     name: "Quarto principal",
     type: "sensor",
-    icon: "search",
+    icon: "thermometer",
     unitOfMeasurement: "ºC",
     state: {
       value: 21,
