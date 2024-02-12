@@ -28,7 +28,7 @@ export default function MainDashboard({
       <FlatList
         data={Object.entries(entities)}
         style={[styles.blurContainer, styles.containerView]}
-        numColumns={3}
+        numColumns={2}
         contentContainerStyle={{ gap: 16 }}
         columnWrapperStyle={{ gap: 16 }}
         renderItem={({ item }) => (
