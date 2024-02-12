@@ -44,6 +44,7 @@ export default function Button({
 
 const styles = StyleSheet.create({
   touchable: {
+    flex: 1,
     borderRadius: 16,
     backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
