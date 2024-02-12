@@ -9,7 +9,7 @@ import MainDashboard from "@/components/MainDashboard";
 import Slider from "@/components/Slider";
 import { initialEntities } from "@/data/entities";
 import { EntityMapping } from "@/types/device";
-import { WsState } from "@/types/socket";
+import { ReceivedEvent, WsState } from "@/types/socket";
 
 export default function App(): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
@@ -99,8 +99,20 @@ export default function App(): JSX.Element {
     }
 
     ws.current.onmessage = (e: MessageEvent<string>) => {
-      const data = JSON.parse(e.data);
-      console.log(data);
+      const data: ReceivedEvent = JSON.parse(e.data);
+      const receivedState = Object.entries(data.event.c)[0];
+      const entityId = receivedState[0];
+      const newValue = receivedState[1]["+"].s;
+
+      const entity = entities[entityId];
+      entity.state.value = newValue;
+
+      const newEntities: EntityMapping = {
+        ...entities,
+        [entityId]: entity,
+      };
+
+      setEntities(newEntities);
     };
   }, [wsState]);
 
