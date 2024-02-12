@@ -2,9 +2,9 @@ import { BlurView } from "expo-blur";
 import { JSX } from "react";
 import {
   ColorSchemeName,
+  FlatList,
   StyleSheet,
   useColorScheme,
-  View,
 } from "react-native";
 
 import Button from "@/components/Button";
@@ -25,16 +25,21 @@ export default function MainDashboard({
       style={styles.blurContainer}
       tint={theme === "dark" ? "dark" : "default"}
     >
-      <View style={[styles.blurContainer, styles.containerView]}>
-        {Object.entries(entities).map(([entity_id, entity]) => (
+      <FlatList
+        data={Object.entries(entities)}
+        style={[styles.blurContainer, styles.containerView]}
+        numColumns={3}
+        contentContainerStyle={{ gap: 16 }}
+        columnWrapperStyle={{ gap: 16 }}
+        renderItem={({ item }) => (
           <Button
-            key={entity_id}
-            title={entity.state.value.toString()}
-            icon={entity.icon}
-            unitOfMeasurement={entity.unitOfMeasurement}
+            title={item[1].state.value.toString()}
+            icon={item[1].icon}
+            unitOfMeasurement={item[1].unitOfMeasurement}
           />
-        ))}
-      </View>
+        )}
+        keyExtractor={(item) => item[0]}
+      />
     </BlurView>
   );
 }
