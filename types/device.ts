@@ -3,6 +3,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
 type State = {
   value: boolean | number | string;
   attributes?: object;
+  hidden?: boolean;
 };
 
 export type Action = {

@@ -61,14 +61,16 @@ export default function Button({
           >
             {entity.name}
           </Text>
-          <Text
-            style={[
-              styles.value,
-              theme === "dark" ? styles.darkTitle : styles.lightTitle,
-            ]}
-          >
-            {entity.state.value} {entity.unitOfMeasurement}
-          </Text>
+          {!entity.state.hidden && (
+            <Text
+              style={[
+                styles.value,
+                theme === "dark" ? styles.darkTitle : styles.lightTitle,
+              ]}
+            >
+              {entity.state.value} {entity.unitOfMeasurement}
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>

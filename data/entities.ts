@@ -38,7 +38,7 @@ export const initialEntities: EntityMapping = {
     },
   },
   "sensor.solax_ac_power": {
-    name: "AC Power",
+    name: "Inversor",
     type: "sensor",
     icon: "solar-panel",
     unitOfMeasurement: "W",
@@ -59,7 +59,8 @@ export const initialEntities: EntityMapping = {
     type: "script",
     icon: "window-shutter-open",
     state: {
-      value: "Off",
+      value: false,
+      hidden: true,
     },
     action: {
       service: "open_the_blinds",
@@ -72,7 +73,8 @@ export const initialEntities: EntityMapping = {
     type: "script",
     icon: "window-shutter",
     state: {
-      value: "Off",
+      value: false,
+      hidden: true,
     },
     action: {
       service: "fechar_todos_os_estores",
@@ -112,6 +114,7 @@ export const initialEntities: EntityMapping = {
     icon: "gate",
     state: {
       value: "Fechado",
+      hidden: true,
     },
     action: {
       service: "portao_da_rua",
@@ -124,7 +127,8 @@ export const initialEntities: EntityMapping = {
     type: "binary_sensor",
     icon: "key",
     state: {
-      value: "Fechado",
+      value: false,
+      hidden: true,
     },
     action: {
       service: "portao",
