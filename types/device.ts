@@ -27,6 +27,7 @@ export type Entity = {
   unitOfMeasurement?: string;
   lastRefreshed?: Date;
   action?: Action;
+  hidden?: boolean;
 };
 
 export type Device = {

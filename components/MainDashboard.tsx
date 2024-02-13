@@ -33,7 +33,7 @@ export default function MainDashboard({
       tint={theme === "dark" ? "dark" : "default"}
     >
       <FlatList
-        data={Object.entries(entities)}
+        data={Object.entries(entities).filter((item) => !item[1].hidden)}
         style={[styles.blurContainer, styles.containerView]}
         numColumns={2}
         contentContainerStyle={{ gap: 16 }}
