@@ -54,34 +54,6 @@ export const initialEntities: EntityMapping = {
       value: 0,
     },
   },
-  "script.open_the_blinds": {
-    name: "Abrir os estores",
-    type: "script",
-    icon: "window-shutter-open",
-    state: {
-      value: false,
-      hidden: true,
-    },
-    action: {
-      service: "open_the_blinds",
-      domain: "script",
-      data: {},
-    },
-  },
-  "script.fechar_todos_os_estores": {
-    name: "Fechar os estores",
-    type: "script",
-    icon: "window-shutter",
-    state: {
-      value: false,
-      hidden: true,
-    },
-    action: {
-      service: "fechar_todos_os_estores",
-      domain: "script",
-      data: {},
-    },
-  },
   "cover.garagem_da_mii": {
     name: "Garagem da Mii",
     type: "cover",
@@ -132,6 +104,34 @@ export const initialEntities: EntityMapping = {
     },
     action: {
       service: "portao",
+      domain: "script",
+      data: {},
+    },
+  },
+  "script.open_the_blinds": {
+    name: "Abrir os estores",
+    type: "script",
+    icon: "window-shutter-open",
+    state: {
+      value: false,
+      hidden: true,
+    },
+    action: {
+      service: "open_the_blinds",
+      domain: "script",
+      data: {},
+    },
+  },
+  "script.fechar_todos_os_estores": {
+    name: "Fechar os estores",
+    type: "script",
+    icon: "window-shutter",
+    state: {
+      value: false,
+      hidden: true,
+    },
+    action: {
+      service: "fechar_todos_os_estores",
       domain: "script",
       data: {},
     },
