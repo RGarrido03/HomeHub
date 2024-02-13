@@ -5,9 +5,10 @@ type State = {
   attributes?: object;
 };
 
-type Action = {
+export type Action = {
   service: string;
-  target: "on" | "off";
+  domain: "cover" | "script";
+  data: object;
 };
 
 export type Entity = {

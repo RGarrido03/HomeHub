@@ -61,6 +61,11 @@ export const initialEntities: EntityMapping = {
     state: {
       value: "Off",
     },
+    action: {
+      service: "open_the_blinds",
+      domain: "script",
+      data: {},
+    },
   },
   "script.fechar_todos_os_estores": {
     name: "Fechar os estores",
@@ -68,6 +73,11 @@ export const initialEntities: EntityMapping = {
     icon: "window-shutter",
     state: {
       value: "Off",
+    },
+    action: {
+      service: "fechar_todos_os_estores",
+      domain: "script",
+      data: {},
     },
   },
   "cover.garagem_da_mii": {
@@ -77,6 +87,11 @@ export const initialEntities: EntityMapping = {
     state: {
       value: "Fechada",
     },
+    action: {
+      service: "garagem_da_mii",
+      domain: "script",
+      data: {},
+    },
   },
   "cover.garagem_do_ruben": {
     name: "Garagem do Rúben",
@@ -84,6 +99,11 @@ export const initialEntities: EntityMapping = {
     icon: "garage",
     state: {
       value: "Fechada",
+    },
+    action: {
+      service: "garagem_do_ruben",
+      domain: "script",
+      data: {},
     },
   },
   "cover.portao_da_rua": {
@@ -93,6 +113,11 @@ export const initialEntities: EntityMapping = {
     state: {
       value: "Fechado",
     },
+    action: {
+      service: "portao_da_rua",
+      domain: "script",
+      data: {},
+    },
   },
   "binary_sensor.card_pin_lock": {
     name: "Portão pequeno",
@@ -100,6 +125,11 @@ export const initialEntities: EntityMapping = {
     icon: "key",
     state: {
       value: "Fechado",
+    },
+    action: {
+      service: "portao",
+      domain: "script",
+      data: {},
     },
   },
 };
