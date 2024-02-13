@@ -9,26 +9,18 @@ import {
   View,
 } from "react-native";
 
-import { Action } from "@/types/device";
+import { Entity } from "@/types/device";
 import { WsState } from "@/types/socket";
 
 type ButtonProps = {
-  title: string;
-  value: string | number;
-  icon?: keyof typeof MaterialIcons.glyphMap;
-  unitOfMeasurement: string | undefined;
-  action: Action | undefined;
+  entity: Entity;
   ws: WebSocket | undefined;
   wsState: WsState;
   setWsState: Dispatch<SetStateAction<WsState>>;
 };
 
 export default function Button({
-  title,
-  value,
-  icon,
-  unitOfMeasurement,
-  action,
+  entity,
   ws,
   wsState,
   setWsState,
@@ -39,25 +31,27 @@ export default function Button({
     <TouchableOpacity
       style={styles.touchable}
       onPress={() => {
-        if (action && ws) {
+        if (entity.action && ws) {
           ws.send(
             JSON.stringify({
               type: "call_service",
-              domain: action.domain,
-              service: action.service,
-              service_data: action.data,
+              domain: entity.action.domain,
+              service: entity.action.service,
+              service_data: entity.action.data,
               id: wsState.id,
             }),
           );
           setWsState((st) => ({ ...st, id: st.id + 1 }));
           return;
         }
-        console.log(`No action or WebSocket is configured for ${title}`);
+        console.log(`No action or WebSocket is configured for ${entity.name}`);
       }}
       activeOpacity={0.7}
     >
       <View style={styles.containerView}>
-        {icon && <MaterialIcons size={32} name={icon} style={styles.icon} />}
+        {entity.icon && (
+          <MaterialIcons size={32} name={entity.icon} style={styles.icon} />
+        )}
         <View style={{ flex: 1 }}>
           <Text
             style={[
@@ -65,7 +59,7 @@ export default function Button({
               theme === "dark" ? styles.darkTitle : styles.lightTitle,
             ]}
           >
-            {title}
+            {entity.name}
           </Text>
           <Text
             style={[
@@ -73,7 +67,7 @@ export default function Button({
               theme === "dark" ? styles.darkTitle : styles.lightTitle,
             ]}
           >
-            {value} {unitOfMeasurement}
+            {entity.state.value} {entity.unitOfMeasurement}
           </Text>
         </View>
       </View>

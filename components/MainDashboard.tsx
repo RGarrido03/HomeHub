@@ -40,11 +40,7 @@ export default function MainDashboard({
         columnWrapperStyle={{ gap: 16 }}
         renderItem={({ item }) => (
           <Button
-            title={item[1].name}
-            value={item[1].state.value.toString()}
-            icon={item[1].icon}
-            unitOfMeasurement={item[1].unitOfMeasurement}
-            action={item[1].action}
+            entity={item[1]}
             ws={ws}
             wsState={wsState}
             setWsState={setWsState}
