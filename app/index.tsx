@@ -18,6 +18,7 @@ export default function App(): JSX.Element {
     auth: false,
     subscribed: false,
     ack: false,
+    id: 1,
   });
 
   const ws = useRef<WebSocket>();
@@ -47,6 +48,7 @@ export default function App(): JSX.Element {
         auth: false,
         subscribed: false,
         ack: false,
+        id: 1,
       });
       ws.current?.close();
     };
@@ -82,7 +84,7 @@ export default function App(): JSX.Element {
             entity_ids: entityIds,
           }),
         );
-        setWsState((st) => ({ ...st, subscribed: true }));
+        setWsState((st) => ({ ...st, subscribed: true, id: 19 }));
         console.log("Subscribed");
       };
       return;
