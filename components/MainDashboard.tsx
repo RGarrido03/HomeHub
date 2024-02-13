@@ -1,5 +1,5 @@
 import { BlurView } from "expo-blur";
-import { JSX } from "react";
+import { Dispatch, JSX, SetStateAction } from "react";
 import {
   ColorSchemeName,
   FlatList,
@@ -9,13 +9,20 @@ import {
 
 import Button from "@/components/Button";
 import { EntityMapping } from "@/types/device";
+import { WsState } from "@/types/socket";
 
 type MainDashboardProps = {
   entities: EntityMapping;
+  ws: WebSocket | undefined;
+  wsState: WsState;
+  setWsState: Dispatch<SetStateAction<WsState>>;
 };
 
 export default function MainDashboard({
   entities,
+  ws,
+  wsState,
+  setWsState,
 }: MainDashboardProps): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
 
@@ -37,6 +44,10 @@ export default function MainDashboard({
             value={item[1].state.value.toString()}
             icon={item[1].icon}
             unitOfMeasurement={item[1].unitOfMeasurement}
+            action={item[1].action}
+            ws={ws}
+            wsState={wsState}
+            setWsState={setWsState}
           />
         )}
         keyExtractor={(item) => item[0]}

@@ -1,4 +1,5 @@
 import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { Dispatch, SetStateAction } from "react";
 import {
   ColorSchemeName,
   StyleSheet,
@@ -8,11 +9,18 @@ import {
   View,
 } from "react-native";
 
+import { Action } from "@/types/device";
+import { WsState } from "@/types/socket";
+
 type ButtonProps = {
   title: string;
   value: string | number;
   icon?: keyof typeof MaterialIcons.glyphMap;
   unitOfMeasurement: string | undefined;
+  action: Action | undefined;
+  ws: WebSocket | undefined;
+  wsState: WsState;
+  setWsState: Dispatch<SetStateAction<WsState>>;
 };
 
 export default function Button({
@@ -20,13 +28,32 @@ export default function Button({
   value,
   icon,
   unitOfMeasurement,
+  action,
+  ws,
+  wsState,
+  setWsState,
 }: ButtonProps) {
   const theme: ColorSchemeName = useColorScheme();
 
   return (
     <TouchableOpacity
       style={styles.touchable}
-      onPress={() => console.log("Pressed")}
+      onPress={() => {
+        if (action && ws) {
+          ws.send(
+            JSON.stringify({
+              type: "call_service",
+              domain: action.domain,
+              service: action.service,
+              service_data: action.data,
+              id: wsState.id,
+            }),
+          );
+          setWsState((st) => ({ ...st, id: st.id + 1 }));
+          return;
+        }
+        console.log(`No action or WebSocket is configured for ${title}`);
+      }}
       activeOpacity={0.7}
     >
       <View style={styles.containerView}>
