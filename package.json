@@ -19,6 +19,7 @@
     "expo-linking": "~6.2.2",
     "expo-media-library": "~15.9.1",
     "expo-router": "~3.4.7",
+    "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.3",
     "react": "18.2.0",

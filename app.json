@@ -3,7 +3,7 @@
     "name": "HomeHub",
     "slug": "homehub",
     "version": "1.0.0",
-    "orientation": "landscape",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "scheme": "your-app-scheme",
@@ -45,7 +45,13 @@
           }
         }
       ],
-      "expo-router"
+      "expo-router",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
     ],
     "extra": {
       "eas": {
