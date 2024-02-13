@@ -100,19 +100,23 @@ export default function App(): JSX.Element {
 
     ws.current.onmessage = (e: MessageEvent<string>) => {
       const data: ReceivedEvent = JSON.parse(e.data);
-      const receivedState = Object.entries(data.event.c)[0];
-      const entityId = receivedState[0];
-      const newValue = receivedState[1]["+"].s;
+      if (data.id === 18 && data.type === "event") {
+        const receivedState = Object.entries(data.event.c)[0];
+        const entityId = receivedState[0];
+        const newValue = receivedState[1]["+"].s;
 
-      const entity = entities[entityId];
-      entity.state.value = newValue;
+        const entity = entities[entityId];
+        entity.state.value = newValue;
 
-      const newEntities: EntityMapping = {
-        ...entities,
-        [entityId]: entity,
-      };
+        const newEntities: EntityMapping = {
+          ...entities,
+          [entityId]: entity,
+        };
 
-      setEntities(newEntities);
+        setEntities(newEntities);
+      } else {
+        console.log(data);
+      }
     };
   }, [wsState]);
 
