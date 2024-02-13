@@ -132,4 +132,22 @@ export const initialEntities: EntityMapping = {
       data: {},
     },
   },
+  "binary_sensor.reolink_video_doorbell_wifi_person": {
+    name: "Pessoa detetada",
+    type: "binary_sensor",
+    icon: "motion-sensor",
+    state: {
+      value: false,
+    },
+    hidden: true,
+  },
+  "binary_sensor.reolink_video_doorbell_wifi_visitor": {
+    name: "Visitante",
+    type: "binary_sensor",
+    icon: "motion-sensor",
+    state: {
+      value: false,
+    },
+    hidden: true,
+  },
 };
