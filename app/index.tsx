@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN, HOST } from "@env";
+import * as ScreenOrientation from "expo-screen-orientation";
 import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
@@ -12,6 +13,8 @@ import { EntityMapping } from "@/types/device";
 import { ReceivedEvent, WsState } from "@/types/socket";
 
 export default function App(): JSX.Element {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+
   const [open, setOpen] = useState<boolean>(false);
   const [wsState, setWsState] = useState<WsState>({
     connected: false,
