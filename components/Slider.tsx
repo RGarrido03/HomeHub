@@ -1,6 +1,7 @@
 import * as MediaLibrary from "expo-media-library";
 import { JSX, useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { ActivityIndicator, DefaultTheme, Text } from "react-native-paper";
 
 import ImageContainer from "@/components/ImageContainer";
 
@@ -70,7 +71,19 @@ export default function Slider(): JSX.Element {
     />
   ) : (
     <View style={styles.waitingView}>
-      <Text style={{ color: "#fff" }}>Fetching photos...</Text>
+      <View style={styles.waitingContainer}>
+        <ActivityIndicator
+          animating
+          size="large"
+          style={{ marginBottom: 32 }}
+        />
+        <Text variant="displaySmall" style={styles.waitingTitle}>
+          Getting ready.
+        </Text>
+        <Text variant="bodyLarge" style={styles.waitingText}>
+          Fetching photos...
+        </Text>
+      </View>
     </View>
   );
 }
@@ -85,8 +98,22 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: "#000",
+    backgroundColor: DefaultTheme.colors.background,
     alignItems: "center",
     justifyContent: "center",
+  },
+  waitingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: DefaultTheme.colors.primaryContainer,
+    borderRadius: 32,
+    padding: 64,
+    gap: 16,
+  },
+  waitingTitle: {
+    color: DefaultTheme.colors.onPrimaryContainer,
+  },
+  waitingText: {
+    color: DefaultTheme.colors.onSecondaryContainer,
   },
 });
