@@ -82,12 +82,12 @@ export default function App(): JSX.Element {
 
         ws.current?.send(
           JSON.stringify({
-            id: 18,
+            id: 1,
             type: "subscribe_entities",
             entity_ids: entityIds,
           }),
         );
-        setWsState((st) => ({ ...st, subscribed: true, id: 19 }));
+        setWsState((st) => ({ ...st, subscribed: true, id: 2 }));
         console.log("Subscribed");
       };
       return;
@@ -103,7 +103,7 @@ export default function App(): JSX.Element {
 
     ws.current.onmessage = (e: MessageEvent<string>) => {
       const data: ReceivedEvent = JSON.parse(e.data);
-      if (data.id === 18 && data.type === "event") {
+      if (data.id === 1 && data.type === "event") {
         const receivedState = Object.entries(data.event.c)[0];
         const entityId = receivedState[0];
         const newValue = receivedState[1]["+"].s;
