@@ -1,9 +1,10 @@
-import { ACCESS_TOKEN, HOST } from "@env";
+import { ACCESS_TOKEN, HOST, STREAM } from "@env";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
+import { RTCView } from "react-native-webrtc";
 
 import Clock from "@/components/Clock";
 import MainDashboard from "@/components/MainDashboard";
@@ -123,10 +124,12 @@ export default function App(): JSX.Element {
     };
   }, [wsState]);
 
+  const camera: boolean = false;
+
   return (
     <PaperProvider>
       <View style={styles.baseContainer}>
-        <Slider />
+        {camera ? <RTCView streamURL={STREAM} /> : <Slider />}
         <TouchableOpacity
           style={styles.openTouchable}
           onPress={() => setOpen(!open)}
