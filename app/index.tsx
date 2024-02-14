@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN, HOST, STREAM } from "@env";
+import { useKeepAwake } from "expo-keep-awake";
 import * as NavigationBar from "expo-navigation-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { setStatusBarHidden } from "expo-status-bar";
@@ -16,6 +17,7 @@ import { EntityMapping } from "@/types/device";
 import { ReceivedEvent, WsState } from "@/types/socket";
 
 export default function App(): JSX.Element {
+  useKeepAwake();
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
   NavigationBar.setPositionAsync("absolute");
   NavigationBar.setVisibilityAsync("hidden");
