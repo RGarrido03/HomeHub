@@ -68,10 +68,12 @@ export default function Button({
                 theme === "dark" ? styles.darkTitle : styles.lightTitle,
               ]}
             >
-              {entity.state.mapping
-                ? entity.state.mapping[entity.state.value.toString()]
-                : entity.state.value}{" "}
-              {entity.unitOfMeasurement}
+              {entity.state.value === "unavailable"
+                ? "Indisponível"
+                : entity.state.mapping
+                  ? entity.state.mapping[entity.state.value.toString()]
+                  : entity.state.value}{" "}
+              {entity.state.value !== "unavailable" && entity.unitOfMeasurement}
             </Text>
           )}
         </View>
