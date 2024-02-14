@@ -44,7 +44,7 @@ export default function Button({
           setWsState((st) => ({ ...st, id: st.id + 1 }));
           return;
         }
-        console.log(`No action or WebSocket is configured for ${entity.name}`);
+        console.log(`No action is configured for ${entity.name}`);
       }}
       activeOpacity={0.7}
     >
@@ -68,7 +68,10 @@ export default function Button({
                 theme === "dark" ? styles.darkTitle : styles.lightTitle,
               ]}
             >
-              {entity.state.value} {entity.unitOfMeasurement}
+              {entity.state.mapping
+                ? entity.state.mapping[entity.state.value.toString()]
+                : entity.state.value}{" "}
+              {entity.unitOfMeasurement}
             </Text>
           )}
         </View>

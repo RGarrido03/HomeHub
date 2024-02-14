@@ -1,9 +1,12 @@
 import MaterialIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 type State = {
-  value: boolean | number | string;
+  value: number | string;
   attributes?: object;
   hidden?: boolean;
+  mapping?: {
+    [key: string]: string;
+  };
 };
 
 export type Action = {

@@ -51,7 +51,11 @@ export const initialEntities: EntityMapping = {
     type: "switch",
     icon: "air-humidifier",
     state: {
-      value: 0,
+      value: "off",
+      mapping: {
+        on: "Ligado",
+        off: "Desligado",
+      },
     },
   },
   "cover.garagem_da_mii": {
@@ -59,7 +63,11 @@ export const initialEntities: EntityMapping = {
     type: "cover",
     icon: "garage",
     state: {
-      value: "Fechada",
+      value: "closed",
+      mapping: {
+        open: "Aberta",
+        closed: "Fechada",
+      },
     },
     action: {
       service: "garagem_da_mii",
@@ -72,7 +80,11 @@ export const initialEntities: EntityMapping = {
     type: "cover",
     icon: "garage",
     state: {
-      value: "Fechada",
+      value: "closed",
+      mapping: {
+        open: "Aberta",
+        closed: "Fechada",
+      },
     },
     action: {
       service: "garagem_do_ruben",
@@ -85,8 +97,12 @@ export const initialEntities: EntityMapping = {
     type: "cover",
     icon: "gate",
     state: {
-      value: "Fechado",
+      value: "closed",
       hidden: true,
+      mapping: {
+        open: "Aberto",
+        closed: "Fechado",
+      },
     },
     action: {
       service: "portao_da_rua",
@@ -99,7 +115,7 @@ export const initialEntities: EntityMapping = {
     type: "binary_sensor",
     icon: "key",
     state: {
-      value: false,
+      value: "off",
       hidden: true,
     },
     action: {
@@ -113,7 +129,7 @@ export const initialEntities: EntityMapping = {
     type: "script",
     icon: "window-shutter-open",
     state: {
-      value: false,
+      value: "off",
       hidden: true,
     },
     action: {
@@ -127,7 +143,7 @@ export const initialEntities: EntityMapping = {
     type: "script",
     icon: "window-shutter",
     state: {
-      value: false,
+      value: "off",
       hidden: true,
     },
     action: {
@@ -141,7 +157,7 @@ export const initialEntities: EntityMapping = {
     type: "binary_sensor",
     icon: "motion-sensor",
     state: {
-      value: false,
+      value: "off",
     },
     hidden: true,
   },
@@ -150,7 +166,7 @@ export const initialEntities: EntityMapping = {
     type: "binary_sensor",
     icon: "motion-sensor",
     state: {
-      value: false,
+      value: "off",
     },
     hidden: true,
   },
