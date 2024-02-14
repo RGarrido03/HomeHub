@@ -17,14 +17,25 @@ import { EntityMapping } from "@/types/device";
 import { ReceivedEvent, WsState } from "@/types/socket";
 
 export default function App(): JSX.Element {
+  // Keep the screen awake
   useKeepAwake();
+
+  // Lock orientation to landscape left
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+
+  // Hide both status bar and navigation bar
   NavigationBar.setPositionAsync("absolute");
   NavigationBar.setVisibilityAsync("hidden");
   NavigationBar.setBehaviorAsync("overlay-swipe");
   setStatusBarHidden(true);
 
+  // States
   const [open, setOpen] = useState<boolean>(false);
+  const [background, setBackground] = useState<"camera" | "slider">("slider");
+  const [entities, setEntities] = useState<EntityMapping>(initialEntities);
+
+  // WebSocket
+  const ws = useRef<WebSocket>();
   const [wsState, setWsState] = useState<WsState>({
     connected: false,
     auth: false,
@@ -32,9 +43,6 @@ export default function App(): JSX.Element {
     ack: false,
     id: 1,
   });
-
-  const ws = useRef<WebSocket>();
-  const [entities, setEntities] = useState<EntityMapping>(initialEntities);
 
   useEffect(() => {
     ws.current = new WebSocket(HOST);
@@ -132,12 +140,14 @@ export default function App(): JSX.Element {
     };
   }, [wsState]);
 
-  const camera: boolean = false;
-
   return (
     <PaperProvider>
       <View style={styles.baseContainer}>
-        {camera ? <RTCView streamURL={STREAM} /> : <Slider />}
+        {background === "camera" ? (
+          <RTCView streamURL={STREAM} style={{ flex: 1, width: "100%" }} />
+        ) : (
+          <Slider />
+        )}
         <TouchableOpacity
           style={styles.openTouchable}
           onPress={() => setOpen(!open)}
