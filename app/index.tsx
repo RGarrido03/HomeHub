@@ -1,5 +1,7 @@
 import { ACCESS_TOKEN, HOST, STREAM } from "@env";
+import * as NavigationBar from "expo-navigation-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { setStatusBarHidden } from "expo-status-bar";
 import { JSX, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
@@ -15,6 +17,10 @@ import { ReceivedEvent, WsState } from "@/types/socket";
 
 export default function App(): JSX.Element {
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+  NavigationBar.setPositionAsync("absolute");
+  NavigationBar.setVisibilityAsync("hidden");
+  NavigationBar.setBehaviorAsync("overlay-swipe");
+  setStatusBarHidden(true);
 
   const [open, setOpen] = useState<boolean>(false);
   const [wsState, setWsState] = useState<WsState>({
