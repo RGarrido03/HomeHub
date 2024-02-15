@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ⛓️ Build & 🚀 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗️ Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: 🏗️ Setup Expo (EAS)
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: ⬇️ Install dependencies
+        run: bun install
+
+      - name: 🚀 Update app in EAS
+        run: eas update --auto
