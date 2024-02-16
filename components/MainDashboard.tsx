@@ -9,20 +9,19 @@ import {
 
 import Button from "@/components/Button";
 import { EntityMapping } from "@/types/device";
-import { WsState } from "@/types/socket";
 
 type MainDashboardProps = {
   entities: EntityMapping;
   ws: WebSocket | undefined;
-  wsState: WsState;
-  setWsState: Dispatch<SetStateAction<WsState>>;
+  wsId: number;
+  setWsId: Dispatch<SetStateAction<number>>;
 };
 
 export default function MainDashboard({
   entities,
   ws,
-  wsState,
-  setWsState,
+  wsId,
+  setWsId,
 }: MainDashboardProps): JSX.Element {
   const theme: ColorSchemeName = useColorScheme();
 
@@ -39,12 +38,7 @@ export default function MainDashboard({
         contentContainerStyle={{ gap: 16 }}
         columnWrapperStyle={{ gap: 16 }}
         renderItem={({ item }) => (
-          <Button
-            entity={item[1]}
-            ws={ws}
-            wsState={wsState}
-            setWsState={setWsState}
-          />
+          <Button entity={item[1]} ws={ws} wsId={wsId} setWsId={setWsId} />
         )}
         keyExtractor={(item) => item[0]}
       />

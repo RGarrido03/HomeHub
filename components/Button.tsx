@@ -10,21 +10,15 @@ import {
 } from "react-native";
 
 import { Entity } from "@/types/device";
-import { WsState } from "@/types/socket";
 
 type ButtonProps = {
   entity: Entity;
   ws: WebSocket | undefined;
-  wsState: WsState;
-  setWsState: Dispatch<SetStateAction<WsState>>;
+  wsId: number;
+  setWsId: Dispatch<SetStateAction<number>>;
 };
 
-export default function Button({
-  entity,
-  ws,
-  wsState,
-  setWsState,
-}: ButtonProps) {
+export default function Button({ entity, ws, wsId, setWsId }: ButtonProps) {
   const theme: ColorSchemeName = useColorScheme();
 
   return (
@@ -40,10 +34,10 @@ export default function Button({
                 ? entity.action.serviceMapping[entity.state.value]
                 : entity.action.service,
               service_data: entity.action.data,
-              id: wsState.id,
+              wsId,
             }),
           );
-          setWsState((st) => ({ ...st, id: st.id + 1 }));
+          setWsId((st) => st + 1);
           return;
         }
         console.log(`No action is configured for ${entity.name}`);

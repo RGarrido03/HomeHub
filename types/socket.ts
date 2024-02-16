@@ -1,11 +1,3 @@
-export type WsState = {
-  connected: boolean;
-  auth: boolean;
-  subscribed: boolean;
-  ack: boolean;
-  id: number;
-};
-
 type Message = {
   type: string;
 };

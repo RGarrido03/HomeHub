@@ -47,16 +47,10 @@ export default function App(): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
   const [background, setBackground] = useState<"camera" | "slider">("slider");
   const [entities, setEntities] = useState<EntityMapping>(initialEntities);
+  const [wsId, setWsId] = useState<number>(1);
 
   // WebSocket
   const ws = useRef<WebSocket>();
-  const [wsState, setWsState] = useState<WsState>({
-    connected: false,
-    auth: false,
-    subscribed: false,
-    ack: false,
-    id: 1,
-  });
 
   useEffect(() => {
     ws.current = new WebSocket(HOST);
@@ -101,8 +95,8 @@ export default function App(): JSX.Element {
               <MainDashboard
                 entities={entities}
                 ws={ws.current}
-                wsState={wsState}
-                setWsState={setWsState}
+                wsId={wsId}
+                setWsId={setWsId}
               />
             </Animated.View>
           )}
