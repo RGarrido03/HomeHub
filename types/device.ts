@@ -10,8 +10,9 @@ type State = {
 };
 
 export type Action = {
-  service: string;
-  domain: "cover" | "script";
+  service?: string;
+  serviceMapping?: { [key: string]: string };
+  domain: "cover" | "script" | "switch";
   data: object;
 };
 

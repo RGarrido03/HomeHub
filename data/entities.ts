@@ -57,6 +57,14 @@ export const initialEntities: EntityMapping = {
         off: "Desligado",
       },
     },
+    action: {
+      serviceMapping: {
+        on: "turn_off",
+        off: "turn_on",
+      },
+      domain: "switch",
+      data: { entity_id: "switch.desumidificador" },
+    },
   },
   "cover.garagem_da_mii": {
     name: "Garagem da Mii",

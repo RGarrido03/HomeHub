@@ -36,7 +36,9 @@ export default function Button({
             JSON.stringify({
               type: "call_service",
               domain: entity.action.domain,
-              service: entity.action.service,
+              service: entity.action.serviceMapping
+                ? entity.action.serviceMapping[entity.state.value]
+                : entity.action.service,
               service_data: entity.action.data,
               id: wsState.id,
             }),
