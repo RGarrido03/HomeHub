@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, HOST } from "@env";
+import { HOST } from "@env";
 import { useKeepAwake } from "expo-keep-awake";
 import * as NavigationBar from "expo-navigation-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -14,7 +14,21 @@ import Player from "@/components/Player";
 import Slider from "@/components/Slider";
 import { initialEntities } from "@/data/entities";
 import { EntityMapping } from "@/types/device";
-import { ReceivedEvent, WsState } from "@/types/socket";
+import {
+  isMessageAuthOk,
+  isMessageAuthRequired,
+  isMessageFetchedStateResponse,
+  isMessageReceivedEvent,
+  isMessageServiceResponse,
+} from "@/utils/inferType";
+import {
+  fetchStates,
+  parseEvent,
+  parseServiceResponse,
+  parseState,
+  sendAuth,
+  subscribeEntities,
+} from "@/utils/socket";
 
 export default function App(): JSX.Element {
   // Keep the screen awake
@@ -47,98 +61,26 @@ export default function App(): JSX.Element {
   useEffect(() => {
     ws.current = new WebSocket(HOST);
 
-    ws.current.onopen = () => {
-      setWsState((st) => ({ ...st, connected: true }));
-    };
+    ws.current.onmessage = (event: MessageEvent<string>) => {
+      const message = JSON.parse(event.data);
 
-    ws.current.onmessage = () => {
-      ws.current?.send(
-        JSON.stringify({
-          type: "auth",
-          access_token: ACCESS_TOKEN,
-        }),
-      );
-      setWsState((st) => ({ ...st, auth: true }));
-      console.log("Authenticated");
-    };
-
-    return () => {
-      setWsState({
-        connected: false,
-        auth: false,
-        subscribed: false,
-        ack: false,
-        id: 1,
-      });
-      ws.current?.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ws.current || !wsState.connected) {
-      return;
-    }
-
-    if (!wsState.auth) {
-      ws.current.onmessage = () => {
-        ws.current?.send(
-          JSON.stringify({
-            type: "auth",
-            access_token: ACCESS_TOKEN,
-          }),
-        );
-        setWsState((st) => ({ ...st, auth: true }));
-        console.log("Authenticated");
-      };
-      return;
-    }
-
-    if (!wsState.subscribed) {
-      ws.current.onmessage = () => {
+      if (isMessageReceivedEvent(message)) {
+        parseEvent(message, entities, setEntities);
+      } else if (isMessageServiceResponse(message)) {
+        parseServiceResponse(message);
+      } else if (isMessageAuthRequired(message)) {
+        sendAuth(ws);
+      } else if (isMessageAuthOk(message)) {
+        fetchStates(ws);
+      } else if (isMessageFetchedStateResponse(message)) {
         const entityIds = Object.entries(entities).map((k) => k[0]);
-
-        ws.current?.send(
-          JSON.stringify({
-            id: 1,
-            type: "subscribe_entities",
-            entity_ids: entityIds,
-          }),
-        );
-        setWsState((st) => ({ ...st, subscribed: true, id: 2 }));
-        console.log("Subscribed");
-      };
-      return;
-    }
-
-    if (!wsState.ack) {
-      ws.current.onmessage = () => {
-        setWsState((st) => ({ ...st, ack: true }));
-        console.log("Acknowledged");
-      };
-      return;
-    }
-
-    ws.current.onmessage = (e: MessageEvent<string>) => {
-      const data: ReceivedEvent = JSON.parse(e.data);
-      if (data.id === 1 && data.type === "event") {
-        const receivedState = Object.entries(data.event.c)[0];
-        const entityId = receivedState[0];
-        const newValue = receivedState[1]["+"].s;
-
-        const entity = entities[entityId];
-        entity.state.value = newValue;
-
-        const newEntities: EntityMapping = {
-          ...entities,
-          [entityId]: entity,
-        };
-
-        setEntities(newEntities);
-      } else {
-        console.log(data);
+        parseState(message, entityIds, entities, setEntities);
+        subscribeEntities(ws, entityIds);
       }
     };
-  }, [wsState]);
+
+    return () => ws.current?.close();
+  }, []);
 
   return (
     <PaperProvider>
