@@ -21,27 +21,29 @@ type ButtonProps = {
 export default function Button({ entity, ws, wsId, setWsId }: ButtonProps) {
   const theme: ColorSchemeName = useColorScheme();
 
+  const handleOnPress = () => {
+    if (entity.action && ws) {
+      ws.send(
+        JSON.stringify({
+          type: "call_service",
+          domain: entity.action.domain,
+          service: entity.action.serviceMapping
+            ? entity.action.serviceMapping[entity.state.value]
+            : entity.action.service,
+          service_data: entity.action.data,
+          id: wsId,
+        }),
+      );
+      setWsId((st) => st + 1);
+      return;
+    }
+    console.log(`No action is configured for ${entity.name}`);
+  };
+
   return (
     <TouchableOpacity
       style={styles.touchable}
-      onPress={() => {
-        if (entity.action && ws) {
-          ws.send(
-            JSON.stringify({
-              type: "call_service",
-              domain: entity.action.domain,
-              service: entity.action.serviceMapping
-                ? entity.action.serviceMapping[entity.state.value]
-                : entity.action.service,
-              service_data: entity.action.data,
-              wsId,
-            }),
-          );
-          setWsId((st) => st + 1);
-          return;
-        }
-        console.log(`No action is configured for ${entity.name}`);
-      }}
+      onPress={handleOnPress}
       activeOpacity={0.7}
     >
       <View style={styles.containerView}>
