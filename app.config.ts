@@ -66,6 +66,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
   ],
+  updates: {
+    url: "https://u.expo.dev/0f620d89-d47d-4a51-9b75-ccf12da4abf3",
+  },
   extra: {
     eas: {
       projectId: "0f620d89-d47d-4a51-9b75-ccf12da4abf3",
