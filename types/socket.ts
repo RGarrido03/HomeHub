@@ -28,27 +28,28 @@ export type ReceivedEvent = Message & {
   };
 };
 
+export type ReceivedEventAll = Message & {
+  id: number;
+  type: "event";
+  event: {
+    a: {
+      [key: string]: {
+        c: string; // ?
+        lc: number; // Timestamp
+        s: string; // Value
+        a: {
+          // Attributes
+          [key: string]: string;
+        };
+      };
+    };
+  };
+};
+
 type Result = Message & {
   id: number;
   type: "result";
   success: boolean;
-};
-
-type ReceivedState = {
-  entity_id: string;
-  state: number | string;
-  attributes?: { [key: string]: string | string[] };
-  last_changed: Date;
-  last_updated: Date;
-  context: {
-    id: string;
-    parent_id: string | null;
-    user_id: string | null;
-  };
-};
-
-export type FetchedStateResponse = Result & {
-  result: ReceivedState[];
 };
 
 export type ServiceResponse = Result & {

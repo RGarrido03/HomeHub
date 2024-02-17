@@ -3,8 +3,8 @@ import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 import { EntityMapping } from "@/types/device";
 import {
-  FetchedStateResponse,
   ReceivedEvent,
+  ReceivedEventAll,
   ServiceResponse,
 } from "@/types/socket";
 
@@ -15,36 +15,6 @@ export const sendAuth = (ws: MutableRefObject<WebSocket | undefined>) => {
       access_token: ACCESS_TOKEN,
     }),
   );
-};
-
-export const fetchStates = (ws: MutableRefObject<WebSocket | undefined>) => {
-  ws.current?.send(
-    JSON.stringify({
-      id: 1,
-      type: "get_states",
-    }),
-  );
-};
-
-export const parseState = (
-  message: FetchedStateResponse,
-  entityIds: string[],
-  entities: EntityMapping,
-  setEntities: Dispatch<SetStateAction<EntityMapping>>,
-) => {
-  message.result.map((state) => {
-    if (!entityIds.includes(state.entity_id)) return;
-
-    const entity = entities[state.entity_id];
-    entity.state.value = state.state;
-
-    const newEntities: EntityMapping = {
-      ...entities,
-      [state.entity_id]: entity,
-    };
-
-    setEntities(newEntities);
-  });
 };
 
 export const parseEvent = (
@@ -67,13 +37,37 @@ export const parseEvent = (
   setEntities(newEntities);
 };
 
+export const parseEventAll = (
+  message: ReceivedEventAll,
+  entities: EntityMapping,
+  setEntities: Dispatch<SetStateAction<EntityMapping>>,
+) => {
+  const receivedEntities = Object.entries(message.event.a);
+
+  let newEntities: EntityMapping = entities;
+
+  receivedEntities.map((rcvEntity) => {
+    const entityId = rcvEntity[0];
+    const value = rcvEntity[1].s;
+    const attributes = rcvEntity[1].a;
+
+    const entity = entities[entityId];
+    entity.state.value = value;
+    entity.state.attributes = attributes;
+
+    newEntities = { ...newEntities, [entityId]: entity };
+  });
+
+  setEntities(newEntities);
+};
+
 export const subscribeEntities = (
   ws: MutableRefObject<WebSocket | undefined>,
   entityIds: string[],
 ) => {
   ws.current?.send(
     JSON.stringify({
-      id: 2,
+      id: 1,
       type: "subscribe_entities",
       entity_ids: entityIds,
     }),

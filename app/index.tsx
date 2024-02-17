@@ -17,15 +17,14 @@ import { EntityMapping } from "@/types/device";
 import {
   isMessageAuthOk,
   isMessageAuthRequired,
-  isMessageFetchedStateResponse,
   isMessageReceivedEvent,
+  isMessageReceivedEventAll,
   isMessageServiceResponse,
 } from "@/utils/inferType";
 import {
-  fetchStates,
   parseEvent,
+  parseEventAll,
   parseServiceResponse,
-  parseState,
   sendAuth,
   subscribeEntities,
 } from "@/utils/socket";
@@ -47,7 +46,7 @@ export default function App(): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
   const [background, setBackground] = useState<"camera" | "slider">("slider");
   const [entities, setEntities] = useState<EntityMapping>(initialEntities);
-  const [wsId, setWsId] = useState<number>(1);
+  const [wsId, setWsId] = useState<number>(2);
 
   // WebSocket
   const ws = useRef<WebSocket>();
@@ -62,14 +61,15 @@ export default function App(): JSX.Element {
         parseEvent(message, entities, setEntities);
       } else if (isMessageServiceResponse(message)) {
         parseServiceResponse(message);
+      } else if (isMessageReceivedEventAll(message)) {
+        parseEventAll(message, entities, setEntities);
       } else if (isMessageAuthRequired(message)) {
         sendAuth(ws);
       } else if (isMessageAuthOk(message)) {
-        fetchStates(ws);
-      } else if (isMessageFetchedStateResponse(message)) {
         const entityIds = Object.entries(entities).map((k) => k[0]);
-        parseState(message, entityIds, entities, setEntities);
         subscribeEntities(ws, entityIds);
+      } else {
+        console.log("\nIgnored", message);
       }
     };
 
