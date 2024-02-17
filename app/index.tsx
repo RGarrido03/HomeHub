@@ -8,9 +8,9 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
 
+import Camera from "@/components/Camera";
 import Clock from "@/components/Clock";
 import MainDashboard from "@/components/MainDashboard";
-import Player from "@/components/Player";
 import Slider from "@/components/Slider";
 import { initialEntities } from "@/data/entities";
 import { EntityMapping } from "@/types/device";
@@ -79,7 +79,7 @@ export default function App(): JSX.Element {
   return (
     <PaperProvider>
       <View style={styles.baseContainer}>
-        {background === "camera" ? <Player /> : <Slider />}
+        {background === "camera" ? <Camera /> : <Slider />}
         <TouchableOpacity
           style={styles.openTouchable}
           onPress={() => setOpen(!open)}
