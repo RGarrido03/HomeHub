@@ -35,13 +35,6 @@ export type Entity = {
   hidden?: boolean;
 };
 
-export type Device = {
-  name: string;
-  icon: keyof typeof MaterialIcons.glyphMap;
-  primaryEntity: string;
-  secondaryEntities?: string[];
-};
-
 export type EntityMapping = {
   [key: string]: Entity;
 };
