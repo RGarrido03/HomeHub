@@ -8,12 +8,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: "homehub",
   version: "1.0.0",
   orientation: "default",
-  icon: "./assets/icon.png",
+  icon: IS_DEV ? "./assets/icon-dev.png" : "./assets/icon.png",
   userInterfaceStyle: "automatic",
-  scheme: "your-app-scheme",
+  scheme: "homehub",
   splash: {
-    image: "./assets/splash.png",
-    resizeMode: "contain",
+    image: IS_DEV ? "./assets/splash-dev.png" : "./assets/splash.png",
+    resizeMode: "cover",
     backgroundColor: "#ffffff",
   },
   runtimeVersion: "1.0.0",
@@ -26,13 +26,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/adaptive-icon.png",
-      backgroundColor: "#ffffff",
+      foregroundImage: IS_DEV
+        ? "./assets/adaptive-icon-dev.png"
+        : "./assets/adaptive-icon.png",
+      backgroundImage: "./assets/adaptive-icon-bg.png",
     },
     package: IS_DEV ? "com.rgarrido03.homehub.dev" : "com.rgarrido03.homehub",
-  },
-  web: {
-    favicon: "./assets/favicon.png",
   },
   plugins: [
     [
