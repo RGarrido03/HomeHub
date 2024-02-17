@@ -34,17 +34,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: IS_DEV ? "com.rgarrido03.homehub.dev" : "com.rgarrido03.homehub",
   },
   plugins: [
-    [
-      "expo-build-properties",
-      {
-        ios: {
-          newArchEnabled: true,
-        },
-        android: {
-          newArchEnabled: true,
-        },
-      },
-    ],
     "expo-router",
     [
       "expo-screen-orientation",
