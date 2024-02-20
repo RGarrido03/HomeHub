@@ -67,7 +67,7 @@ export default function App(): JSX.Element {
         sendAuth(ws);
       } else if (isMessageAuthOk(message)) {
         const entityIds = Object.entries(entities).map((k) => k[0]);
-        subscribeEntities(ws, entityIds);
+        subscribeEntities(ws, entityIds, wsId, setWsId);
       } else {
         console.log("\nIgnored", message);
       }

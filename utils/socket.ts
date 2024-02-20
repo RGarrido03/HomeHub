@@ -64,14 +64,17 @@ export const parseEventAll = (
 export const subscribeEntities = (
   ws: MutableRefObject<WebSocket | undefined>,
   entityIds: string[],
+  wsId: number,
+  setWsId: Dispatch<SetStateAction<number>>,
 ) => {
   ws.current?.send(
     JSON.stringify({
-      id: 1,
+      id: wsId,
       type: "subscribe_entities",
       entity_ids: entityIds,
     }),
   );
+  setWsId(wsId + 1);
 };
 
 export const parseServiceResponse = (message: ServiceResponse) => {
