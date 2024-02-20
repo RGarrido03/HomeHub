@@ -73,6 +73,18 @@ export default function App(): JSX.Element {
       }
     };
 
+    setInterval(() => {
+      setWsId((id) => {
+        ws.current?.send(
+          JSON.stringify({
+            id,
+            type: "ping",
+          }),
+        );
+        return id + 1;
+      });
+    }, 600000);
+
     return () => ws.current?.close();
   }, []);
 
