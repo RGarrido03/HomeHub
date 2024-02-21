@@ -83,7 +83,7 @@ export default function App(): JSX.Element {
         );
         return id + 1;
       });
-    }, 600000);
+    }, 60000);
 
     return () => ws.current?.close();
   }, []);
