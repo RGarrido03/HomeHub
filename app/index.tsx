@@ -54,6 +54,10 @@ export default function App(): JSX.Element {
   useEffect(() => {
     ws.current = new WebSocket(HOST);
 
+    ws.current.onclose = () => {
+      ws.current = new WebSocket(HOST);
+    };
+
     ws.current.onmessage = (event: MessageEvent<string>) => {
       const message = JSON.parse(event.data);
 
