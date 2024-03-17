@@ -21,6 +21,7 @@ export const parseEvent = (
   message: ReceivedEvent,
   entities: EntityMapping,
   setEntities: Dispatch<SetStateAction<EntityMapping>>,
+  setBackground: Dispatch<SetStateAction<"camera" | "slider">>,
 ) => {
   const receivedState = Object.entries(message.event.c)[0];
   const entityId = receivedState[0];
@@ -35,6 +36,15 @@ export const parseEvent = (
   };
 
   setEntities(newEntities);
+
+  if (
+    (entityId === "binary_sensor.reolink_video_doorbell_wifi_person" ||
+      entityId === "binary_sensor.reolink_video_doorbell_wifi_visitor") &&
+    newValue === "on"
+  ) {
+    setBackground("camera");
+    setTimeout(() => setBackground("slider"), 15000);
+  }
 };
 
 export const parseEventAll = (

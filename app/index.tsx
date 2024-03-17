@@ -64,7 +64,7 @@ export default function App(): JSX.Element {
         const message = JSON.parse(event.data);
 
         if (isMessageReceivedEvent(message)) {
-          parseEvent(message, entities, setEntities);
+          parseEvent(message, entities, setEntities, setBackground);
         } else if (isMessageServiceResponse(message)) {
           parseServiceResponse(message);
         } else if (isMessageReceivedEventAll(message)) {
@@ -104,7 +104,7 @@ export default function App(): JSX.Element {
   return (
     <PaperProvider>
       <View style={styles.baseContainer}>
-        {background === "camera" ? <Camera /> : <Slider />}
+        {background === "camera" ? <RtspPlayer /> : <Slider />}
         <TouchableOpacity
           style={styles.openTouchable}
           onPress={() => setOpen(!open)}
