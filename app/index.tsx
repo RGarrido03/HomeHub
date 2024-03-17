@@ -1,4 +1,5 @@
 import { HOST } from "@env";
+import TurboLogger from "@mattermost/react-native-turbo-log";
 import { useKeepAwake } from "expo-keep-awake";
 import * as NavigationBar from "expo-navigation-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -52,46 +53,50 @@ export default function App(): JSX.Element {
   const ws = useRef<WebSocket>();
 
   useEffect(() => {
-    ws.current = new WebSocket(HOST);
+    const logic = async () => {
+      await TurboLogger.configure();
+      ws.current = new WebSocket(HOST);
 
-    ws.current.onopen = () => console.info("Websocket opened");
-    ws.current.onclose = (ev) => console.warn("WebSocket closed", ev);
+      ws.current.onopen = () => console.info("Websocket opened");
+      ws.current.onclose = (ev) => console.warn("WebSocket closed", ev);
 
-    ws.current.onmessage = (event: MessageEvent<string>) => {
-      const message = JSON.parse(event.data);
+      ws.current.onmessage = (event: MessageEvent<string>) => {
+        const message = JSON.parse(event.data);
 
-      if (isMessageReceivedEvent(message)) {
-        parseEvent(message, entities, setEntities);
-      } else if (isMessageServiceResponse(message)) {
-        parseServiceResponse(message);
-      } else if (isMessageReceivedEventAll(message)) {
-        parseEventAll(message, entities, setEntities);
-      } else if (isMessageAuthRequired(message)) {
-        sendAuth(ws);
-      } else if (isMessageAuthOk(message)) {
-        const entityIds = Object.entries(entities).map((k) => k[0]);
-        subscribeEntities(ws, entityIds, wsId, setWsId);
-      } else {
-        console.log("\nIgnored", message);
-      }
-    };
+        if (isMessageReceivedEvent(message)) {
+          parseEvent(message, entities, setEntities);
+        } else if (isMessageServiceResponse(message)) {
+          parseServiceResponse(message);
+        } else if (isMessageReceivedEventAll(message)) {
+          parseEventAll(message, entities, setEntities);
+        } else if (isMessageAuthRequired(message)) {
+          sendAuth(ws);
+        } else if (isMessageAuthOk(message)) {
+          const entityIds = Object.entries(entities).map((k) => k[0]);
+          subscribeEntities(ws, entityIds, wsId, setWsId);
+        } else {
+          console.log("\nIgnored", message);
+        }
+      };
 
-    setInterval(() => {
-      setWsId((id) => {
-        console.debug("Pinging", {
-          id,
-          type: "ping",
-        });
-
-        ws.current?.send(
-          JSON.stringify({
+      setInterval(() => {
+        setWsId((id) => {
+          console.debug("Pinging", {
             id,
             type: "ping",
-          }),
-        );
-        return id + 1;
-      });
-    }, 60000);
+          });
+
+          ws.current?.send(
+            JSON.stringify({
+              id,
+              type: "ping",
+            }),
+          );
+          return id + 1;
+        });
+      }, 60000);
+    };
+    logic();
 
     return () => ws.current?.close();
   }, []);

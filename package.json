@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@config-plugins/react-native-webrtc": "^8.0.0",
+    "@mattermost/react-native-turbo-log": "^0.3.1",
     "dayjs": "^1.11.10",
     "expo": "~50.0.13",
     "expo-blur": "~12.9.2",
