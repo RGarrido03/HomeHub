@@ -9,9 +9,9 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import Animated, { FadeInRight, FadeOutRight } from "react-native-reanimated";
 
-import Camera from "@/components/Camera";
 import Clock from "@/components/Clock";
 import MainDashboard from "@/components/MainDashboard";
+import RtspPlayer from "@/components/RtspPlayer";
 import Slider from "@/components/Slider";
 import { initialEntities } from "@/data/entities";
 import { EntityMapping } from "@/types/device";
