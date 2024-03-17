@@ -54,9 +54,8 @@ export default function App(): JSX.Element {
   useEffect(() => {
     ws.current = new WebSocket(HOST);
 
-    ws.current.onclose = () => {
-      ws.current = new WebSocket(HOST);
-    };
+    ws.current.onopen = () => console.info("Websocket opened");
+    ws.current.onclose = (ev) => console.warn("WebSocket closed", ev);
 
     ws.current.onmessage = (event: MessageEvent<string>) => {
       const message = JSON.parse(event.data);
@@ -79,6 +78,11 @@ export default function App(): JSX.Element {
 
     setInterval(() => {
       setWsId((id) => {
+        console.debug("Pinging", {
+          id,
+          type: "ping",
+        });
+
         ws.current?.send(
           JSON.stringify({
             id,
