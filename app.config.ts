@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: IS_DEV ? "HomeHub (Dev)" : "HomeHub",
   slug: "homehub",
-  version: "1.0.0",
+  version: "1.1.0",
   orientation: "default",
   icon: IS_DEV ? "./assets/icon-dev.png" : "./assets/icon.png",
   userInterfaceStyle: "automatic",
@@ -16,8 +16,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     resizeMode: "cover",
     backgroundColor: "#ffffff",
   },
-  runtimeVersion: "1.0.0",
-  assetBundlePatterns: ["**/*"],
+  runtimeVersion: "1.1.0",
+  newArchEnabled: true,
   ios: {
     supportsTablet: true,
     bundleIdentifier: IS_DEV
