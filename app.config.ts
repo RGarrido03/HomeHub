@@ -52,4 +52,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   owner: "rgarrido03",
+  experiments: {
+    reactCompiler: true,
+  },
 });
